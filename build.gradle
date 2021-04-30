@@ -1,0 +1,51 @@
+buildscript {
+    ext {
+        springBootVersion = '1.4.3.RELEASE'
+    }
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+plugins {
+    id "org.sonarqube" version "3.0"
+}
+
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: "org.sonarqube"
+
+jar {
+    baseName = 'state-viewer'
+    version = '1.0'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web','org.apache.tomcat.embed:tomcat-embed-jasper')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    implementation 'org.sonarsource.scanner.api:sonar-scanner-api:2.16.0.226'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '2.1.7.RELEASE'
+    implementation group: 'net.sf.ucanaccess', name: 'ucanaccess', version: '4.0.4'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '1.4.3.RELEASE'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '1.4.3.RELEASE'
+
+}
+
+bootRun {
+    systemProperties = System.properties
+}
